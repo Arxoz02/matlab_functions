@@ -26,10 +26,10 @@ function [curva, trayectoria, intersecciones] = reboteC(p0,v0,fx,fy,k,g,R,rt,rs)
         p = P(n) + V(n)*t + 0.5*g*t.^2; % Trayectoria de la pelota
 
         [sT, sF] = vpasolve([real(p) == fx; imag(p) == fy], [t; s], [1e-8 inf; -inf inf]); % Intersección en tiempo y espacio.
-        if isempty(sT) % Si el intervalo se vuelve muy grande, ocasiona errores
+        if isempty(sT) % Si no encuentra intersección, rompe el ciclo
+            n = n-1;
             P = P(1:n);
             V = V(1:n);
-            n = n-1;
             disp(['Sólo se realizaron ' num2str(n) ' rebotes.'])
             break
         end
